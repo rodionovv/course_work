@@ -8,12 +8,12 @@ app.listen(9000, () => {
 });
 
 app.use(uploadfiles());
-app.use(express.static('templates'));
+app.use(express.static('templates/graphpage'));
 
 app.get('/', function (req, res) {
     console.log('get');
     res.writeHead(200, {'Content-Type' : 'text/html'});
-    res.end(fs.readFileSync('lsjfglkjfl;cvkjbsl;kbjsl;kfzl;kvbjs;klfdjbs;klftemplates/index.html'));
+    res.end(fs.readFileSync('templates/index.html'));
 });
 
 

@@ -1,42 +1,41 @@
 const fs = require('fs');
 const express = require('express');
 const uploadfiles = require('express-fileupload');
-
-var file_dir = __dirname + '/files'
+const exphbs = require('express-handlebars');
+const files = require('./files');
+const file_router = require('./routes/files');
 
 const app = express();
-app.listen(9000, () => {
+const PORT = process.env.port || 9000;
+var file_dir = __dirname + '/files'
+
+var hbs = exphbs.create({
+    defaultLayout: 'main',
+    helpers: {
+        link: (path) =>  "graph/" + path,
+    }
+});
+
+
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+app.use(uploadfiles());
+app.use(express.json());
+app.use(express.urlencoded( { extended: false }));
+
+
+app.get('/', (req, res) => res.render('index', {
+    title: 'Home Page',
+    files
+}));
+app.use('/files', file_router);
+
+app.listen(PORT, () => {
     if (!fs.existsSync(file_dir)) {
         fs.mkdirSync(file_dir);
     }
     console.log('Server is running on port 9000');
 });
 
-app.use(uploadfiles());
-app.use('graph/', express.static('templates/graphpage/'));
-app.use(express.static('templates/mainpage/'));
-
-app.get('/', function (req, res) {
-    console.log('get');
-    res.writeHead(200, {'Content-Type' : 'text/html'});
-    res.end(fs.readFileSync('templates/index.html'));
-});
 
 
-app.post('/', function(req, res) {
-    if (req.files) {
-        console.log(req.files);
-        var file = req.files.file,
-            filename = file.name;
-        if (file.mimetype == 'text/plain') {
-            var file_path = file_dir + '/' + filename;
-            if (!fs.existsSync(file_path)) {
-                file.mv(file_dir + '/' + filename, function (err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                })
-            }
-        }
-    }
-});

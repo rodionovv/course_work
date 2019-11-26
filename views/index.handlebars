@@ -1,0 +1,16 @@
+<form method="post" action="/files/add" enctype="multipart/form-data">
+    <div>
+        <label for="file">Choose file to upload</label>
+        <input type="file" id="file" name="path" multiple>
+        <input type="text" placeholder="Имя графа" name="name" id="name">
+    </div>
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+<ul id="list">
+    {{#each files}}
+        <li><a href={{link this.path}}>{{this.name}}</a></li>
+    {{/each}}
+</ul>
+

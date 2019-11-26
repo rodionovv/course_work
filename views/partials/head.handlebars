@@ -1,0 +1,10 @@
+<head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    {{#each scripts}}
+        <script src={{this.script}}></script>
+    {{/each}}
+    {{#if style}}
+        <link href={{style}} rel="stylesheet">
+    {{/if}}
+</head>

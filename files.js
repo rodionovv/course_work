@@ -1,11 +1,11 @@
 const files = [
     {
         name: 'file_1',
-        path: 'path_2'
+        path: ''
     },
     {
         name: 'file_2',
-        path: 'path_1'
+        path: 'graph/web-BerkStan.txt'
     }
 ]
 

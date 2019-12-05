@@ -1,4 +1,5 @@
-function main() {
+function main(s) {
+    console.log(s);
     var gr = "1\t2\n" +
         "1\t5\n" +
         "1\t7\n" +

@@ -5,6 +5,8 @@ const fs = require('fs');
 
 const rl = require('readline');
 const router = Router();
+const hello_world = require('bindings')('hello_world');
+
 
 
 
@@ -42,7 +44,8 @@ router.get('/*.txt', (req, res) => {
     // });
 
     // console.log(graph)
-
+    string = hello_world.sayHI()
+    
     res.render('graph', {
         title: 'Graph Page',
         scripts: [
@@ -53,7 +56,8 @@ router.get('/*.txt', (req, res) => {
                 script: "../../graphpage/creategraph.js"
             }
         ],
-        style: "../../graphpage/style.css"
+        style: "../../graphpage/style.css",
+        message: string[0] + string[1],
     });
 });
 

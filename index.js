@@ -5,9 +5,7 @@ const exphbs = require('express-handlebars');
 const files = require('./files');
 const file_router = require('./routes/files');
 const graph_router = require('./routes/graph');
-const hello_world = require('bindings')('hello_world')
 
-console.log(hello_world.sayHI());
 
 
 

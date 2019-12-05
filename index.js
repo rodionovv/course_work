@@ -17,18 +17,21 @@ var hbs = exphbs.create({
         link: (path) =>  "graph/" + path,
     }
 });
-
-
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+
 app.use(uploadfiles());
 app.use(express.static('static'));
 app.use(express.json());
 app.use(express.urlencoded( { extended: false }));
+
+
 app.get('/', (req, res) => res.render('index', {
     title: 'Home Page',
     files,
 }));
+
+
 app.use('/files', file_router);
 app.use('/graph', graph_router);
 

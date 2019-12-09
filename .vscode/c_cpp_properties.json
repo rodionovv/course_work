@@ -5,7 +5,12 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/node_modules/node-addon-api",
-                "${workspaceFolder}/node_modules/node-addon-api/external-napi"
+                "${workspaceFolder}/node_modules/node-addon-api/external-napi",
+                "${workspaceFolder}",
+                "/usr/include/c++/8/parallel",
+                "/home/vasya/Snap-5.0",
+                "${workspaceFolder}/Snap-5.0/glib-core",
+                "${workspaceFolder}/Snap-5.0/snap-core"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

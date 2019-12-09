@@ -1,17 +1,47 @@
 #include <napi.h>
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <utility>
+#include <map>
+#include <vector>
 
 using namespace std;
 
-Napi::Array SayHi(const Napi::CallbackInfo& info) {
+
+Napi::Object SayHi(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
-    int n = 2;
-    string arr_1[n] = {"Hello", " world!"};
-    Napi::Array arr = Napi::Array::New(env, n);
-    for (int i = 0; i < n; i++) {
-        arr[i] = Napi::String::New(env, arr_1[i]);
+    string path = info[0].As<Napi::String>();
+    ifstream infile(path);
+    string line;
+    map<int, vector<int>> graph;
+    while (getline(infile, line)) {
+        istringstream iss(line);
+        int arr[2], i = 0;
+        string num;
+        while (getline(iss, num, ' ')){
+            if (num[0] != '#' && num[0] != 'T'){
+                arr[i] = stoi(num);
+                i++;
+            }
+        }
+        if (graph.find(arr[0]) == graph.end()){
+            vector<int> vec = { arr[1] }; 
+            graph.insert(pair<int, vector<int>>( arr[0], vec ));
+        } else {
+            graph[arr[0]].push_back(arr[1]);
+        }
     }
-    return arr;
+    Napi::Object obj = Napi::Object::New(env);
+    for (auto const& it : graph) {
+        Napi::Array arr = Napi::Array::New(env, it.second.size());
+        for (int i = 0; i < it.second.size(); i++) {
+            Napi::Number val = Napi::Number::New(env, it.second[i]);
+            arr[i] = val;
+        }
+        obj.Set(it.first, arr);
+    }
+    return obj;
 }
 
 Napi::Object init(Napi::Env env, Napi::Object exports) {

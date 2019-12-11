@@ -40,7 +40,7 @@ function main(s, level) {
             .attr('fill', "#00a2e8")  
             .text(node.data.side);
 
-        $(ui).click(function (){
+        $(ui).dblclick(function (){
             var newLevel = parseInt(level) + 1
             window.location.href = "/graph/" + s + "/" + newLevel + "/" + ui.textContent;
         });

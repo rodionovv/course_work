@@ -19,12 +19,13 @@ Napi::Object SayHi(const Napi::CallbackInfo& info) {
         istringstream iss(line);
         int arr[2], i = 0;
         string num;
-        while (getline(iss, num, ' ')){
+        while (getline(iss, num, '\t')){
             if (num[0] != '#' && num[0] != 'T'){
                 arr[i] = stoi(num);
                 i++;
             }
         }
+        
         if (graph.find(arr[0]) == graph.end()){
             vector<int> vec = { arr[1] }; 
             graph.insert(pair<int, vector<int>>( arr[0], vec ));
@@ -33,13 +34,15 @@ Napi::Object SayHi(const Napi::CallbackInfo& info) {
         }
     }
     Napi::Object obj = Napi::Object::New(env);
+    string str = "left";
     for (auto const& it : graph) {
         Napi::Array arr = Napi::Array::New(env, it.second.size());
         for (int i = 0; i < it.second.size(); i++) {
             Napi::Number val = Napi::Number::New(env, it.second[i]);
             arr[i] = val;
         }
-        obj.Set(it.first, arr);
+        obj.Set(str, arr);
+        str = "right";
     }
     return obj;
 }

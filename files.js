@@ -5,7 +5,7 @@ const files = [
     },
     {
         name: 'file_2',
-        path: 'web-BerkStan.txt'
+        path: 'web-BerkStan.txt/1'
     }
 ]
 
